@@ -5,35 +5,26 @@ calculation = ""
 def add_to_calculations(symbol):
     global calculation
     calculation += str(symbol)
-    text_result.delete(1.0, "tk.END")
-    text_result.insert(1.0, "calculation")
+    text_result.delete(1.0, "end")
+    text_result.insert(1.0, calculation)
 
-
-
-def evaulate_calculation():
+def evaluate_calculation():
     global calculation
+    print(calculation)
     try:
-        result = str(eval(calculation))
+        
+        result = str(eval(calculation.replace('x', '*').replace('÷', '/')))
         calculation = ""
-        text_result.delete (1.0, "end")
-        text_result.insert(1.0, calculation)
-   
+        text_result.delete(1.0, "end")
+        text_result.insert(1.0, result)
     except:
         clear_field()
         text_result.insert(1.0, "error")
-        pass
 
-   
-    def clear_field():
-     global calculation
-     calculation = ""
-
+def clear_field():
+    global calculation
+    calculation = ""
     text_result.delete(1.0, "end")
-     
-    
-    pass
-
-
 
 root = tk.Tk()
 root.geometry("300x275")
@@ -67,15 +58,17 @@ btn_times = tk.Button(root, text="x", command=lambda: add_to_calculations("x"), 
 btn_times.grid(row=3, column=4)
 btn_minus = tk.Button(root, text="-", command=lambda: add_to_calculations("-"), width=5, font=("Arial", 14))
 btn_minus.grid(row=4, column=4)
-btn_divide = tk.Button(root, text="÷", command=lambda: add_to_calculations("÷"), width=5, font=("Arial", 14))
-btn_divide.grid(row=5, column=4)
-
-
-
-
-
+btn_div = tk.Button(root, text="÷", command=lambda: add_to_calculations("÷"), width=5, font=("Arial", 14))
+btn_div.grid(row=5, column=4)
+btn_open = tk.Button(root, text="(", command=lambda: add_to_calculations("("), width=5, font=("Arial", 14))
+btn_open.grid(row=5, column=1)
+btn_close = tk.Button(root, text=")", command=lambda: add_to_calculations(")"), width=5, font=("Arial", 14))
+btn_close.grid(row=5, column=3)
+btn_equal = tk.Button(root, text="=", command=evaluate_calculation, width=11, font=("Arial", 14))
+btn_equal.grid(row=6, column=3, columnspan=2)
+btn_clear = tk.Button(root, text="C", command=clear_field, width=12, font=("Arial", 14))
+btn_clear.grid(row=6, column=1, columnspan=2)
 root.mainloop()
-
 
 
 
